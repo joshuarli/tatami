@@ -11,7 +11,7 @@ ln -sfv "${PWD}/wallpaper-1440x900.png" "${HOME}/wallpaper.png"
 printf %s\\n "installing slock + pm-utils..."
 sudo apk add slock pm-utils
 rc-update add acpid
-sudo printf \\n%s\\n "%sudo ALL=(ALL) NOPASSWD:/usr/sbin/pm-suspend" >> /etc/sudoers
+sudo sh -c 'printf \\n%s\\n "%sudo ALL=(ALL) NOPASSWD:/usr/sbin/pm-suspend" >> /etc/sudoers'
 # TODO physlock instead of slock, currently 0.5 in the testing repos is too old and doesn't work (utmp issues  https://bugs.alpinelinux.org/issues/3282)
 
 TMP="$(mktemp -d)"
