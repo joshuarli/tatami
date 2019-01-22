@@ -1,0 +1,16 @@
+HOSTNAME='akashi'
+KEYMAPOPTS='us us'
+HOSTNAMEOPTS="-n ${HOSTNAME}"
+
+INTERFACESOPTS="auto lo
+iface lo inet loopback
+"
+
+DNSOPTS='9.9.9.9'
+PROXYOPTS='none'
+# explicitly only install openssh-client later on
+SSHDOPTS='none'
+NTPOPTS='-c busybox'
+
+# auto-detect fastest mirror
+APKREPOOPTS='-f'

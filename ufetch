@@ -1,0 +1,83 @@
+#!/usr/bin/env sh
+
+# ufetch - tiny system info, for Alpine
+
+# TODO: get rid of string replacement so this can be fully POSIX
+
+die () { printf %s\\n "ERROR: ${1}"; exit 1; }
+
+require () {
+    command -v "$1" >/dev/null 2>&1 || die "${1} not found and is required."
+}
+
+require tput
+
+ # coreutils (basename, tail, ...) may not be in a base install
+apk info -e coreutils > /dev/null || die 'please install the coreutils package.'
+
+# requires procps package for ps -p which busybox ps does not support
+apk info -e procps > /dev/null || die 'please install the procps package.'
+
+# utils
+ppid () { ps -o ppid= -p $PPID; }
+trim () { printf %s\\n "${1//[[:space:]]/}"; }
+# stolen from https://github.com/dylanaraps/neofetch
+mem () {
+    while IFS=":" read -r a b; do
+        case "$a" in
+            "MemTotal")
+                mem_used="$((mem_used+=${b/kB}))"; mem_total="${b/kB}" ;;
+            "Shmem")
+                mem_used="$((mem_used+=${b/kB}))" ;;
+            "MemFree" | "Buffers" | "Cached" | "SReclaimable")
+                mem_used="$((mem_used-=${b/kB}))" ;;
+        esac
+    done < /proc/meminfo
+    mem_used="$((mem_used / 1024))"
+    mem_total="$((mem_total / 1024))"
+    printf %s\\n "${mem_used} MiB / ${mem_total} MiB"
+}
+
+# info
+host="$(hostname)"
+os='Alpine Linux'
+kernel="$(uname -sr)"
+packages="$(apk info | wc -l)"
+term="$(cat /proc/$(trim "$(ppid)")/comm)"
+shell="$(basename "$SHELL")"
+wm="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
+memory="$(mem)"
+
+## TODO: detect tty and if so, disable term + wm in a pretty way
+
+# colors
+# stolen from https://gitlab.com/jschx/ufetch/blob/master/ufetch-alpine
+bold="$(tput bold)"
+# black="$(tput setaf 0)"
+red="$(tput setaf 1)"
+# green="$(tput setaf 2)"
+# yellow="$(tput setaf 3)"
+blue="$(tput setaf 4)"
+# magenta="$(tput setaf 5)"
+# cyan="$(tput setaf 6)"
+white="$(tput setaf 7)"
+reset="$(tput sgr0)"
+lc="${reset}${bold}${blue}"		# labels
+nc="${reset}${bold}${red}"		# hostname
+ic="${reset}${bold}${white}"	# info
+c0="${reset}${blue}"			# first color
+c1="${reset}${white}"			# second color
+
+# output
+cat <<EOF
+
+${c0}                   ${ic}${USER}${reset}@${nc}${host}${reset}
+${c0}     /\ /\         ${lc}OS:        ${ic}${os}${reset}
+${c0}    /${c1}/ ${c0}\  \        ${lc}Kernel:    ${ic}${kernel}${reset}
+${c0}   /${c1}/   ${c0}\  \       ${lc}Packages:  ${ic}${packages}${reset}
+${c0}  /${c1}//    ${c0}\  \      ${lc}Term:      ${ic}${term}${reset}
+${c0}  ${c1}//      ${c0}\  \     ${lc}Shell:     ${ic}${shell}${reset}
+${c0}           \       ${lc}WM:        ${ic}${wm}${reset}
+${c0}                   ${lc}Memory:    ${ic}${memory}${reset}
+
+EOF
