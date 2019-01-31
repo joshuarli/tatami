@@ -16,7 +16,7 @@ sudo setup-xorg-base
 # freetype-dev is required to fix libharfbuzz dynamic symbol issues when running dunst
 sudo apk add \
     bspwm sxhkd rxvt-unicode dmenu stalonetray dunst libnotify feh freetype-dev \
-    lemonbar dbus-x11 scrot xclip xf86-input-synaptics xinit xhost xrdb
+    lemonbar dbus-x11 scrot xclip xf86-input-synaptics xinit xhost xprop xrdb
 
 printf %s\\n "installing (uf)etch..."
 mkdir -p "${HOME}/bin"
