@@ -40,18 +40,16 @@ mem () {
 
 # info
 host="$(hostname)"
-os='Alpine Linux'
+dist='Alpine Linux'
 kernel="$(uname -sr)"
 packages="$(apk info | wc -l)"
 term="$(cat /proc/$(trim "$(ppid)")/comm)"
 shell="$(basename "$SHELL")"
-wm="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
+wm="$(tail -n 1 "${HOME}/.xinitrc" | awk '{print $2}')"
 memory="$(mem)"
-
 ## TODO: detect tty and if so, disable term + wm in a pretty way
 
 # colors
-# stolen from https://gitlab.com/jschx/ufetch/blob/master/ufetch-alpine
 bold="$(tput bold)"
 # black="$(tput setaf 0)"
 red="$(tput setaf 1)"
@@ -62,22 +60,21 @@ blue="$(tput setaf 4)"
 # cyan="$(tput setaf 6)"
 white="$(tput setaf 7)"
 reset="$(tput sgr0)"
-lc="${reset}${bold}${blue}"		# labels
-nc="${reset}${bold}${red}"		# hostname
-ic="${reset}${bold}${white}"	# info
-c0="${reset}${blue}"			# first color
-c1="${reset}${white}"			# second color
+lc="${reset}${blue}"  # label color
+ic="${reset}${white}"        # item color
+c0="${reset}${blue}"
+c1="${reset}${white}"
 
 # output
 cat <<EOF
 
-${c0}                   ${ic}${USER}${reset}@${nc}${host}${reset}
-${c0}     /\ /\         ${lc}OS:        ${ic}${os}${reset}
-${c0}    /${c1}/ ${c0}\  \        ${lc}Kernel:    ${ic}${kernel}${reset}
-${c0}   /${c1}/   ${c0}\  \       ${lc}Packages:  ${ic}${packages}${reset}
-${c0}  /${c1}//    ${c0}\  \      ${lc}Term:      ${ic}${term}${reset}
-${c0}  ${c1}//      ${c0}\  \     ${lc}Shell:     ${ic}${shell}${reset}
-${c0}           \       ${lc}WM:        ${ic}${wm}${reset}
-${c0}                   ${lc}Memory:    ${ic}${memory}${reset}
+${c0}                   ${reset}${bold}${white}${USER}${reset}@${bold}${red}${host}${reset}
+${c0}     /\ /\         ${lc}dist      ${ic}${dist}${reset}
+${c0}    /${c1}/ ${c0}\  \        ${lc}kernel    ${ic}${kernel}${reset}
+${c0}   /${c1}/   ${c0}\  \       ${lc}pkg       ${ic}${packages}${reset}
+${c0}  /${c1}//    ${c0}\  \      ${lc}term      ${ic}${term}${reset}
+${c0}  ${c1}//      ${c0}\  \     ${lc}shell     ${ic}${shell}${reset}
+${c0}           \       ${lc}wm        ${ic}${wm}${reset}
+${c0}                   ${lc}mem       ${ic}${memory}${reset}
 
 EOF
