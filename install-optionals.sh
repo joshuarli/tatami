@@ -29,6 +29,10 @@ sudo apk add \
     atool cryptsetup curl gnupg htop nano ncdu openssh-client tree \
     mplayer mpv sxiv editorconfig micro firefox ttf-dejavu
 
+printf %s\\n "installing udevil + pmount..."
+sudo apk add udevil
+# TODO: pmount
+
 printf %s\\n "installing python3 + pip..."
 sudo apk add python3
 python3 -m ensurepip

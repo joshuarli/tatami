@@ -9,7 +9,7 @@ sudo apk update
 printf %s\\n "installing mksh as login shell..."
 sudo apk add mksh
 printf %s\\n "you'll be prompted for your password to chsh"
-sudo chsh -s "$(which mksh)" "$(whoami)"
+sudo chsh -s "$(command -v mksh)" "$(whoami)"
 
 printf %s\\n "installing core graphical software..."
 sudo setup-xorg-base
@@ -17,12 +17,13 @@ sudo setup-xorg-base
 sudo apk add \
     bspwm sxhkd rxvt-unicode dmenu stalonetray dunst libnotify feh freetype-dev \
     lemonbar dbus-x11 scrot xclip xf86-input-synaptics xinit xhost xprop xrdb
+# todo: s/scrot/maim
 
 printf %s\\n "installing (uf)etch..."
 mkdir -p "${HOME}/bin"
 # custom ufetch, depends on non-busybox ps for the -p flag
 sudo apk add procps
-wget https://raw.githubusercontent.com/JoshuaRLi/tatami/master/ufetch -O "${HOME}/bin/uf"
+busybox wget https://raw.githubusercontent.com/JoshuaRLi/tatami/master/ufetch -O "${HOME}/bin/uf"
 chmod u+x "${HOME}/bin/uf"
 
 printf %s\\n "installing dotfiles..."
