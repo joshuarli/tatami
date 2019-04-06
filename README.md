@@ -1,6 +1,6 @@
-# [tatami](https://jrl.ninja/configs/tatami)
+# [tatami](https://jrl.ninja/configs)
 
-alpine linux configs
+alpine linux configs, inspired by [Yojo-Han Shinwa Taikei](https://myanimelist.net/anime/7785/Yojouhan_Shinwa_Taikei)
 
 ```
 wm + friends:   bspwm + sxhkd + dmenu + dunst
@@ -28,8 +28,5 @@ ymmv, but generally `install-stage1.sh` in a tty as a sudo-enabled user, then in
 `micro`, `feh`
 
 ![](./gallery/3.jpg?raw=true)
-
-
-## [Yojo-Han Shinwa Taikei](https://myanimelist.net/anime/7785/Yojouhan_Shinwa_Taikei)
 
 ![](./gallery/tatami.jpg?raw=true)
