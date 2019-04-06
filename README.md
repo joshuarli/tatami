@@ -17,7 +17,7 @@ ymmv, but generally `install-stage1.sh` in a tty as a sudo-enabled user, then in
 
 ## Gallery
 
-[`ufetch`](https://github.com/JoshuaRLi/tatami/blob/master/ufetch), [`colors`](https://github.com/JoshuaRLi/bin/blob/master/colorpanes)
+[`uf`](https://github.com/JoshuaRLi/dotfiles/blob/master/configs/tatami/bin/uf), [`colors`](https://github.com/JoshuaRLi/bin/blob/master/colorpanes)
 
 ![](./gallery/1.jpg?raw=true)
 
