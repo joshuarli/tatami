@@ -2,7 +2,6 @@
 
 set -e
 
-# TODO: detect and fail on presence of something like /media/sdb/ from install
 sudo sed -i 's/#//g' /etc/apk/repositories
 sudo apk update
 
@@ -14,9 +13,11 @@ sudo chsh -s "$(command -v mksh)" "$(whoami)"
 printf %s\\n "installing core graphical software..."
 sudo setup-xorg-base
 # freetype-dev is required to fix libharfbuzz dynamic symbol issues when running dunst
+# tatami-bar requires xprop, xrdb, and wireless-tools (iwgetid)
 sudo apk add \
     bspwm sxhkd rxvt-unicode dmenu stalonetray dunst libnotify feh freetype-dev \
-    lemonbar dbus-x11 scrot xclip xf86-input-synaptics xinit xhost xprop xrdb
+    lemonbar scrot xclip xinit xhost xprop xrdb wireless-tools
+
 # todo: s/scrot/maim
 
 printf %s\\n "installing dotfiles..."
