@@ -10,11 +10,6 @@ font:           tewi
 shell:          mksh
 ```
 
-## Install
-
-ymmv, but generally `install-stage1.sh` in a tty as a sudo-enabled user, then in X, `install-stage2.sh` and reboot (or kill `xinit` then `startx` again).
-
-
 ## Gallery
 
 [`uf`](https://github.com/JoshuaRLi/dotfiles/blob/master/configs/tatami/bin/uf), [`colors`](https://github.com/JoshuaRLi/bin/blob/master/colorpanes)
