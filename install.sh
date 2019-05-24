@@ -7,7 +7,7 @@ sudo sed -i 's/#//g' /etc/apk/repositories
 sudo apk update
 
 printf %s\\n "installing mksh as login shell..."
-sudo apk add mksh
+sudo apk add mksh shadow
 printf %s\\n "you'll be prompted for your password to chsh"
 sudo chsh -s "$(command -v mksh)" "$(whoami)"
 

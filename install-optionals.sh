@@ -22,7 +22,7 @@ EOF
 sudo amixer sset Master unmute
 
 printf %s\\n "installing busybox replacements..."
-grep less shadow util-linux wget pciutils usbutils coreutils binutils findutils
+sudo apk add less shadow util-linux wget pciutils usbutils coreutils binutils findutils
 
 printf %s\\n "installing other useful software..."
 sudo apk add \
